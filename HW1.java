@@ -1,4 +1,4 @@
-
+//Calvin Kallio comp272 Section 002
 /*
  * *** PLACE YOUR NAME / SECTION  HERE ***
  *
@@ -86,10 +86,15 @@ public class HW1 {
          * found in the linked-list that is less than thr parameter value passed.
          */
         public void removeElementsLT ( int ltValue ) {
-
-            // YOUR CODE GOES HERE
-
-            return;
+            //remove all elements by traversing the list and calling removeElement()
+            Node current = this.head;
+            while (current != null){
+                Node nextNode = current.next;
+                if (current.data < ltValue){
+                    removeElement(current.data);
+                }
+                current = nextNode;
+            }
         }
 
 
@@ -98,11 +103,21 @@ public class HW1 {
          * value equal to the value the provided parameter 'value'.
          */
 
-        public void removeElement ( int value ) {
+        public void removeElement(int value) {
+            // Remove all occurrences of `value` at the head
+            while (this.head != null && this.head.data == value) {
+                this.head = this.head.next; // Move head forward
+            }
 
-            // YOUR CODE GOES HERE
-
-            return;
+            // Traverse the list and remove nodes containing `value`
+            Node current = this.head;
+            while (current != null && current.next != null) {
+                if (current.next.data == value) {
+                    current.next = current.next.next; // Correctly remove the node
+                } else {
+                    current = current.next; // Move forward
+                }
+            }
         }
 
 
@@ -160,8 +175,31 @@ public class HW1 {
             Stack<Character> stack = new Stack<>();
             input = input.toLowerCase().replaceAll("\\s+", "");
 
-            // Your CODE GOES HERE
-            return false;
+            //find length of input string and how much of it to push to the stack
+            int inputLength = input.length();
+            int inputToPush = inputLength / 2;
+
+            //Push the first half of the string to the stack
+            for (int i = 0; i < inputToPush; i++) {
+                stack.push(input.charAt(i));
+            }
+
+            //Handling case of even vs odd length
+            //Ignores the middle character is it has an odd length as that would not affect the palindrome
+            int startIndex = 0;
+            if (inputLength % 2 == 0) {
+                startIndex = inputToPush;
+            } else {
+                startIndex = inputToPush + 1;
+            }
+
+            //Comparing the second half of the input to the first half in the stack
+            for (int i = startIndex; i < inputLength; i++) {
+                if (stack.pop() != input.charAt(i)) {
+                    return false;
+                }
+            }
+            return true;
         }
 
 
@@ -181,9 +219,29 @@ public class HW1 {
          * completed, place them all back in teh original stack.
          */
         public static int findLargestK(Stack<Integer> stack, int k) {
+            //Create temporary stack
+            Stack<Integer> tempStack = new Stack<>();
 
-            // YOUR CODE GOES HERE
-            return -1;
+            //Placeholder variables
+            int largestIndex = 0;
+            int currentIndex = stack.size() - 1; //starting from the last element in the stack
+
+            //Traverse and look for k
+            while (!stack.isEmpty()){
+                int current = stack.pop();
+                tempStack.push(current);
+
+                if (current == k && largestIndex < currentIndex){
+                    largestIndex = currentIndex;
+                }
+                currentIndex--;
+            }
+
+            //Rebuild original stack
+            while (!tempStack.isEmpty()){
+                stack.push(tempStack.pop());
+            }
+            return largestIndex;
         }
 
     }  // End class Stacks
@@ -219,7 +277,7 @@ public class HW1 {
         */
 
         // RETURN THE CORRECT OPTION NUMBER LISTED ABOVE
-        return -1;
+        return 3;
     }
 
 
@@ -240,7 +298,7 @@ public class HW1 {
          */
 
         // RETURN THE CORRECT OPTION LISTED ABOVE
-        return -1;
+        return 2;
     }
 
 }
