@@ -104,18 +104,18 @@ public class HW1 {
          */
 
         public void removeElement(int value) {
-            // Remove all occurrences of `value` at the head
+            //Remove the value from the head of the Linked List
             while (this.head != null && this.head.data == value) {
                 this.head = this.head.next; // Move head forward
             }
 
-            // Traverse the list and remove nodes containing `value`
+            //Traverse list and remove all values equal to input
             Node current = this.head;
             while (current != null && current.next != null) {
                 if (current.next.data == value) {
-                    current.next = current.next.next; // Correctly remove the node
+                    current.next = current.next.next; //Skip the node
                 } else {
-                    current = current.next; // Move forward
+                    current = current.next; //Traverse the list
                 }
             }
         }
